@@ -1,0 +1,31 @@
+[project]
+name = "dpk_prep_alliance"
+version = "0.0.1"
+keywords = ["data", "data preprocessing", "data preparation", "llm", "generative", "ai"]
+requires-python = ">=3.10,<3.13"
+description = "Data Preparation Toolkit Library for Ray and Python"
+license = {text = "Apache-2.0"}
+readme = {file = "README.md", content-type = "text/markdown"}
+authors = [
+    { name = "Boris Lublinsky", email = "blublinsky@hotmail.com" },
+]
+
+dynamic = ["dependencies", "optional-dependencies"]
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel", "setuptools_scm[toml]>=7.1.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = { file  = ["requirements.txt", "requirements-dev.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# Currently we use low coverage since we have to run tests separately (see makefile)
+
+markers = ["unit: unit tests", "integration: integration tests"]
+
+[tool.coverage.run]
+include = ["src/*"]
