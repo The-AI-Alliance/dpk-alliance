@@ -8,3 +8,4 @@ from data_processing.utils.transform_utils import (
     MB,
 )
 from data_processing.utils.cli_utils import CLIArgumentProvider, ParamsUtils, str2bool
+from data_processing.utils.unrecoverable import UnrecoverableException

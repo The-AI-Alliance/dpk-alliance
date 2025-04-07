@@ -15,6 +15,11 @@ files that exist in the source directory but not in the destination directory. T
 supports checkpointing. If the current run fails and it is restarted, it will only process the files 
 that have not been processed yet.
 
+The main classes of the data access layer are presented in Figure below
+
+![Data Access classes](../../../images/data_access.png)
+
+
 ## Data Access
 Data access base class described above is an abstract class defining overall capabilities. The packege provides 
 several concrete files implementing this class for several different storage mechanisms:
