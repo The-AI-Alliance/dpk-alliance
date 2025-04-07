@@ -39,9 +39,10 @@ and maintenance of transforms:
 * [transform runtime](transform_runtime.py) - this class support transform's ability to leverage 
   additional capabilities supported by a given pipeline, for example shared classes in the case of
   pure Python or shared actors in the case of Ray. It also provides support for folder transforms - 
-  list of folders to process. Supported pipelines provide default implementation of this class and the
-  user only have to implement it if he really needs to use mentioned above capabilities or creating a folder 
-  transform
+  list of folders to process. Supported pipelines provide default implementation of this class
+  (for [Python](python/transform_runtime.py) and [Ray](ray/transform_runtime.py)) and the
+  user only have to implement it if he really needs to use mentioned above capabilities or creating 
+  a folder transform. 
 * [transform statistics](transform_statistics.py) - this class is a very simple singleton dictionary 
   allowing both runtime and transform implementation collect execution statistics (metadata)
 
