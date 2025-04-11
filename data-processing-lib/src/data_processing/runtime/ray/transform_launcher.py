@@ -29,11 +29,14 @@ class RayTransformLauncher(AbstractTransformLauncher):
             DataAccessFactory, list[DataAccessFactory]
         ] = DataAccessFactory(),
         orchestrator: type[RayTransformOrchestrator] = RayTransformOrchestrator,
+        address: str = "ray://localhost:10001",
     ):
         """
         Creates driver
         :param runtime_config: transform runtime factory
         :param data_access_factory: the factory to create DataAccess instances.
+        :param orchestrator: orchestrator class to use
+        :param address: GRPC access to the existing Ray cluster
         """
         super().__init__(
             runtime_config=runtime_config,
@@ -41,6 +44,7 @@ class RayTransformLauncher(AbstractTransformLauncher):
             orchestrator=orchestrator,
         )
         self.execution_config = RayTransformExecutionConfiguration(name=self.name)
+        self.address = address
 
     def _get_arguments(self, parser: argparse.ArgumentParser) -> argparse.Namespace:
         """
@@ -86,7 +90,7 @@ class RayTransformLauncher(AbstractTransformLauncher):
             else:
                 # connect to the existing cluster
                 logger.info("Connecting to the existing Ray cluster")
-                ray.init(f"ray://localhost:10001", ignore_reinit_error=True)
+                ray.init(address=self.address, ignore_reinit_error=True)
             logger.debug("Starting orchestrator")
             remote_orchestrate = ray.remote(num_cpus=1, scheduling_strategy="SPREAD")(
                 orchestrate

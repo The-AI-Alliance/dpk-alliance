@@ -3,7 +3,7 @@ import sys
 
 from data_processing.utils import ParamsUtils
 from data_processing.runtime.ray import RayTransformLauncher
-from data_processing.test_support.transform.ray import NOOPRayTransformConfiguration
+from data_processing.examples.noop.ray import NOOPRayTransformConfiguration
 
 
 """

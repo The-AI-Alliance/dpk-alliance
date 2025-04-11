@@ -3,7 +3,7 @@ import os
 from data_processing.runtime import TransformInvoker
 from data_processing.runtime.ray import RayTransformLauncher
 from data_processing.utils import get_logger, ParamsUtils
-from data_processing.test_support.transform.ray import NOOPRayTransformConfiguration
+from data_processing.examples.noop.ray import NOOPRayTransformConfiguration
 
 logger = get_logger(__name__)
 

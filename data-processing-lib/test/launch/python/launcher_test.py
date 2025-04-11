@@ -2,7 +2,7 @@ import os
 import sys
 
 from data_processing.runtime.python import PythonTransformLauncher
-from data_processing.test_support.transform.python import (
+from data_processing.examples.noop.python import (
     NOOPPythonTransformConfiguration,
 )
 from data_processing.utils import ParamsUtils

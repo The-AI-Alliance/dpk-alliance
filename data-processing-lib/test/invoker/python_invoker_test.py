@@ -3,7 +3,7 @@ import os
 from data_processing.runtime import TransformInvoker
 from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.utils import get_logger, ParamsUtils
-from data_processing.test_support.transform.python import (
+from data_processing.examples.noop.python import (
     NOOPPythonTransformConfiguration,
 )
 
