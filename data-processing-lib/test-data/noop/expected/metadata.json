@@ -1,0 +1,37 @@
+{
+    "pipeline": "pipeline_id",
+    "job details": {
+        "job category": "preprocessing",
+        "job name": "noop",
+        "start_time": "2024-09-22 21:58:36",
+        "end_time": "2024-09-22 21:58:37",
+        "status": "success"
+    },
+    "job_input_params": {
+        "sleep_sec": 1,
+        "checkpointing": false,
+        "max_files": -1,
+        "random_samples": -1,
+        "files_to_use": [".parquet"],
+        "num_processors": 0
+    },
+    "job_output_stats": {
+        "source_files": 1,
+        "source_size": 753,
+        "result_files": 1,
+        "result_size": 759,
+        "processing_time": 1.093,
+        "nfiles": 1,
+        "nrows": 7,
+        "source_doc_count": 7,
+        "result_doc_count": 7
+    },
+    "source": {
+        "name": "/Users/borisl/Projects/data-prep-kit/transforms/universal/noop/python/test-data/input",
+        "type": "path"
+    },
+    "target": {
+        "name": "/Users/borisl/Projects/data-prep-kit/transforms/universal/noop/python/output",
+        "type": "path"
+    }
+}

@@ -28,7 +28,7 @@ class AbstractTransformLauncher:
         """
         Creates driver
         :param runtime_config: transform runtime factory
-        :param data_access_factory: the factory to create DataAccess instances.
+        :param data_access_factory: the factory(s) to create DataAccess instances.
         :param orchestrator: implementation of the orchestrator
         """
         self.runtime_config = runtime_config

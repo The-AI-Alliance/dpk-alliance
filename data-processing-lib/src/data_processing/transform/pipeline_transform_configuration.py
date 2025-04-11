@@ -62,6 +62,13 @@ class PipelineTransformConfiguration(TransformConfiguration):
             params |= t.transform_config.get_input_params()
         return params
 
+    def get_transform_params(self) -> dict[str, Any]:
+        """
+        Get transform parameters
+        :return: transform parameters
+        """
+        return {"transforms": self.pipeline}
+
     def get_transform_metadata(self) -> dict[str, Any]:
         """
         Get transform metadata. Before returning remove all parameters key accumulated in

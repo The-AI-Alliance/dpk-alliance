@@ -78,10 +78,9 @@ class RayTransformExecutionConfiguration(TransformExecutionConfiguration):
         self.n_workers = captured["num_workers"]
         self.creation_delay = captured["creation_delay"]
         self.job_details = {
-            "job category": "preprocessing",
+            "job category": captured["job_category"],
             "job name": self.name,
             "job type": "ray",
-            "job id": captured["job_id"],
         }
         # if the user did not define actor max_restarts set it up for fault tolerance
         if "max_restarts" not in self.worker_options:

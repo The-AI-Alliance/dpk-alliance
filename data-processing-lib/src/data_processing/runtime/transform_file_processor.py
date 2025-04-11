@@ -107,6 +107,9 @@ class AbstractTransformFileProcessor:
         the hook for them to return back locally stored data and their statistics.
         :return: None
         """
+        if self.is_folder:
+            # flush is not supported by folder transform
+            return
         if self.last_file_name is None:
             # for some reason a given worker never processed anything. Happens in testing
             # when the amount of workers is greater than the amount of files
