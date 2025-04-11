@@ -4,8 +4,8 @@ from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.test_support.launch.transform_test import (
     AbstractTransformLauncherTest,
 )
-from data_processing.test_support.transform.python import (
-    ResizeNOOPPythonTransformConfiguration,
+from data_processing.examples.pipeline.python import (
+    PipelinePythonTransformConfiguration,
 )
 
 
@@ -21,7 +21,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         basedir = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "../../../test-data/resize")
         )
-        launcher = PythonTransformLauncher(ResizeNOOPPythonTransformConfiguration())
+        launcher = PythonTransformLauncher(PipelinePythonTransformConfiguration())
 
         # Split into 4 or so files
         config = {"resize_max_rows_per_table": 125, "noop_sleep_sec": 1}

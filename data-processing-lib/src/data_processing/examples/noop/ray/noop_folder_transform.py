@@ -1,5 +1,5 @@
 from data_processing.data_access import DataAccess
-from data_processing.test_support.transform.python import (
+from data_processing.examples.noop.python import (
     NOOPFolderTransform,
     NOOPTransformConfiguration,
 )

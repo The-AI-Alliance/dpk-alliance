@@ -1,20 +1,18 @@
+from data_processing.runtime.python import (
+    PythonTransformLauncher,
+    PythonTransformRuntimeConfiguration,
+)
+from data_processing.examples.noop.python import NOOPPythonTransformConfiguration
+from data_processing.examples.resize.python import ResizePythonTransformConfiguration
 from data_processing.transform import PipelineTransformConfiguration
+from data_processing.transform.python import PythonPipelineTransform
 from data_processing.utils import get_logger
-from data_processing.runtime.ray import (
-    RayTransformLauncher,
-    RayTransformRuntimeConfiguration,
-)
-from data_processing.test_support.transform.ray import (
-    NOOPRayTransformConfiguration,
-    ResizeRayTransformConfiguration,
-)
-from data_processing.transform.ray import RayPipelineTransform
 
 
 logger = get_logger(__name__)
 
 
-class ResizeNOOPRayTransformConfiguration(RayTransformRuntimeConfiguration):
+class PipelinePythonTransformConfiguration(PythonTransformRuntimeConfiguration):
     """
     Implements the PythonTransformConfiguration for NOOP as required by the PythonTransformLauncher.
     NOOP does not use a RayRuntime class so the superclass only needs the base
@@ -28,16 +26,15 @@ class ResizeNOOPRayTransformConfiguration(RayTransformRuntimeConfiguration):
         super().__init__(
             transform_config=PipelineTransformConfiguration(
                 pipeline=[
-                    ResizeRayTransformConfiguration(),
-                    NOOPRayTransformConfiguration(),
+                    ResizePythonTransformConfiguration(),
+                    NOOPPythonTransformConfiguration(),
                 ],
-                transform_class=RayPipelineTransform,
+                transform_class=PythonPipelineTransform,
             )
         )
 
 
 if __name__ == "__main__":
-    # launcher = NOOPRayLauncher()
-    launcher = RayTransformLauncher(ResizeNOOPRayTransformConfiguration())
+    launcher = PythonTransformLauncher(PipelinePythonTransformConfiguration())
     logger.info("Launching resize/noop transform")
     launcher.launch()

@@ -6,7 +6,7 @@ from data_processing.runtime.python import (
     PythonTransformLauncher,
     PythonTransformRuntimeConfiguration,
 )
-from data_processing.test_support.transform.python import NOOPTransformConfiguration
+from data_processing.examples.noop.python import NOOPTransformConfiguration
 from data_processing.transform import AbstractFolderTransform
 from data_processing.transform.python import DefaultPythonTransformRuntime
 from data_processing.utils import get_logger

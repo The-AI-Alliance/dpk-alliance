@@ -4,7 +4,7 @@ from data_processing.test_support.launch.transform_test import (
     AbstractTransformLauncherTest,
 )
 from data_processing.runtime.ray import RayTransformLauncher
-from data_processing.test_support.transform.ray import ResizeRayTransformConfiguration
+from data_processing.examples.resize.ray import ResizeRayTransformConfiguration
 
 
 class TestRayResizeTransform(AbstractTransformLauncherTest):
