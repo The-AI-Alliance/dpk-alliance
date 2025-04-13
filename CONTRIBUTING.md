@@ -69,8 +69,5 @@ and include flag `-s | --sign-off` when you commit a change to your local git re
 git commit -s -m "your commit message"
 ```
 
-## Transform Setup and Testing
-Please note the many useful options of the make command, as shown by using `make help`, that will take care of manual steps that would have been needed for tasks such as building, publishing, setting up or testing transforms in most directories.
-
 ## Coding style guidelines
 Coding style as enforced by [ruff](https://github.com/astral-sh/ruff).
