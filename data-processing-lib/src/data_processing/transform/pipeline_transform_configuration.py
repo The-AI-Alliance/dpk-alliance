@@ -1,5 +1,5 @@
 from argparse import ArgumentParser, Namespace
-from typing import Any
+from typing import Any, Union
 
 from data_processing.transform import (
     AbstractPipelineTransform,
@@ -20,10 +20,19 @@ class PipelineTransformConfiguration(TransformConfiguration):
 
     def __init__(
         self,
-        pipeline: list[TransformRuntimeConfiguration],
+        pipeline: list[
+            Union[TransformRuntimeConfiguration, list[TransformRuntimeConfiguration]]
+        ],
         transform_class: type[AbstractPipelineTransform],
         name: str = "pipeline",
     ):
+        """
+        Initialise pipeline configuration
+        :param pipeline: definition of the pipeline, supporting both sequential and fork/join
+                         implementation. Here, an internal list specifies transforms running in parallel
+        :param transform_class: base implementation class
+        :param name: transform name
+        """
         super().__init__(
             name=name,
             transform_class=transform_class,
@@ -38,7 +47,13 @@ class PipelineTransformConfiguration(TransformConfiguration):
         (e.g, noop_, pii_, etc.)
         """
         for t in self.pipeline:
-            t.transform_config.add_input_params(parser=parser)
+            if isinstance(t, TransformRuntimeConfiguration):
+                # single transform
+                t.transform_config.add_input_params(parser=parser)
+            else:
+                # its a list. Note we do not support nested lists here
+                for tt in t:
+                    tt.transform_config.add_input_params(parser=parser)
 
     def apply_input_params(self, args: Namespace) -> bool:
         """
@@ -48,7 +63,13 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         res = True
         for t in self.pipeline:
-            res = res and t.transform_config.apply_input_params(args=args)
+            if isinstance(t, TransformRuntimeConfiguration):
+                # single transform
+                res = res and t.transform_config.apply_input_params(args=args)
+            else:
+                # its a list.
+                for tt in t:
+                    res = res and tt.transform_config.apply_input_params(args=args)
         return res
 
     def get_input_params(self) -> dict[str, Any]:
@@ -59,7 +80,13 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         params = {}
         for t in self.pipeline:
-            params |= t.transform_config.get_input_params()
+            if isinstance(t, TransformRuntimeConfiguration):
+                # single transform
+                params |= t.transform_config.get_input_params()
+            else:
+                # its a list.
+                for tt in t:
+                    params |= tt.transform_config.get_input_params()
         return params
 
     def get_transform_params(self) -> dict[str, Any]:
@@ -79,5 +106,11 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         params = {}
         for t in self.pipeline:
-            params |= t.transform_config.get_transform_metadata()
+            if isinstance(t, TransformRuntimeConfiguration):
+                # single transform
+                params |= t.transform_config.get_transform_metadata()
+            else:
+                # its a list.
+                for tt in t:
+                    params |= tt.transform_config.get_transform_metadata()
         return params
