@@ -56,3 +56,7 @@ class PythonPipelineTransform(AbstractPipelineTransform):
                 for t in transform:
                     stats = t[1].compute_execution_stats(stats=stats)
         self.statistics.add_stats(stats)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2891b32 (fork-join implementation)
