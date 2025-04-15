@@ -47,6 +47,13 @@ class PythonPipelineTransform(AbstractPipelineTransform):
         :param stats: current statistics from flush
         :return: None
         """
+        for transform in self.participants:
+            if isinstance(transform, tuple):
+                # single transform
+                stats = transform[1].compute_execution_stats(stats=stats)
+            else:
+                # it's a list
+                for t in transform:
+                    stats = t[1].compute_execution_stats(stats=stats)
         self.statistics.add_stats(stats)
-        for _, runtime in self.participants:
-            runtime.compute_execution_stats(stats=self.statistics)
+

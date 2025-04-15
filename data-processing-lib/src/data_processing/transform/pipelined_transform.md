@@ -17,7 +17,11 @@ a set of individual transformers, passing data between then as a byte array in m
 As pipelined transform is a type of transform it is using a configuration class to configure its execution.
 Because pipeline transform is a special type of transform, it is using a special 
 [configuration implementation](pipeline_transform_configuration.py). The only parameters specified 
-for a pipelined transforms is a list of transform configurations (specific for transform runtime). 
+for a pipelined transforms is a list of transform configurations (specific for transform runtime).
+Here list can have both individual transform configuration or arrays of transform configurations. 
+In the latter case transforms in sublist are considered to be a fork and are executed on the same data.
+After the fork completion, data produced by fork participants is merged, for example fork of two
+transforms each producing a single file will return 2 files.
 Configurations of the participating transforms are defined by the configurations of the transforms 
 themselves.
 

@@ -38,6 +38,12 @@ class RayPipelineTransform(AbstractPipelineTransform):
         """
         current = ray.get(self.statistics.get_execution_stats.remote())
         current |= stats
-        for _, runtime in self.participants:
-            current = runtime.compute_execution_stats(stats=current)
+        for transform in self.participants:
+            if isinstance(transform, tuple):
+                # single transform
+                current  = transform[1].compute_execution_stats(stats=current)
+            else:
+                # it's a list
+                for t in transform:
+                    current = t[1].compute_execution_stats(stats=current)
         ray.get(self.statistics.update_stats.remote(current))
