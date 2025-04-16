@@ -41,7 +41,7 @@ class RayPipelineTransform(AbstractPipelineTransform):
         for transform in self.participants:
             if isinstance(transform, tuple):
                 # single transform
-                current  = transform[1].compute_execution_stats(stats=current)
+                current = transform[1].compute_execution_stats(stats=current)
             else:
                 # it's a list
                 for t in transform:

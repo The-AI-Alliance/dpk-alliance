@@ -1,0 +1,52 @@
+{
+  "job details": {
+    "job category": "preprocessing",
+    "job name": "pipeline",
+    "job type": "pure python",
+    "start_time": "2025-04-16 12:57:04",
+    "end_time": "2025-04-16 12:57:15",
+    "status": "success"
+  },
+  "job_input_params": {
+    "max_rows_per_table": 125,
+    "max_mbytes_per_table": -1,
+    "size_type": "disk",
+    "sleep_sec": 1,
+    "checkpointing": false,
+    "max_files": -1,
+    "random_samples": -1,
+    "files_to_use": [
+      ".parquet"
+    ],
+    "files_to_checkpoint": [
+      ".parquet"
+    ],
+    "num_processors": 0
+  },
+  "execution_stats": {
+    "cpus": 14.2,
+    "gpus": 0,
+    "memory": 16.4,
+    "object_store": 0,
+    "execution time, min": 0.173
+  },
+  "job_output_stats": {
+    "source_files": 3,
+    "source_size": 117483,
+    "result_files": 10,
+    "result_size": 160480,
+    "processing_time": 10.354,
+    "source_doc_count": 475,
+    "result_doc_count": 375,
+    "nfiles": 4,
+    "nrows": 475
+  },
+  "source": {
+    "name": "/Users/borisl/Projects/dpk-alliance/data-processing-lib/test-data/pipeline_fork/input",
+    "type": "path"
+  },
+  "target": {
+    "name": "/tmp/pipeline2h078vk0",
+    "type": "path"
+  }
+}
