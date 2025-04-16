@@ -41,11 +41,7 @@ class RayPipelineTransform(AbstractPipelineTransform):
         for transform in self.participants:
             if isinstance(transform, tuple):
                 # single transform
-<<<<<<< HEAD
-                current = transform[1].compute_execution_stats(stats=current)
-=======
                 current  = transform[1].compute_execution_stats(stats=current)
->>>>>>> 2891b32 (fork-join implementation)
             else:
                 # it's a list
                 for t in transform:
