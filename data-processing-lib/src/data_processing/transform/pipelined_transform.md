@@ -12,6 +12,11 @@ To overcome this drawback, DPK introduced an additional type of transform - pipe
 is both a transform, meaning it transforms one file at a time, and a pipeline, meaning that each file is processed by
 a set of individual transformers, passing data between then as a byte array in memory.
 
+>***Note*** When defining pipeline transform each base transform can be used in pipeline only once. If you need to use 
+a given transform more then once you need to create a copy of this transform configuration with a different 
+configuration prefix and different configuration parameters (see example 
+[here](../examples/noop/python/noop1_transform.py))
+
 ## Pipeline Transform configuration
 
 As pipelined transform is a type of transform it is using a configuration class to configure its execution.
