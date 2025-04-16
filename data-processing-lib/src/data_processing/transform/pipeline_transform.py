@@ -62,7 +62,7 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         self, definition: TransformRuntimeConfiguration
     ) -> tuple[AbstractBinaryTransform, TransformRuntime]:
         """
-        Create a transform and its runtime based on the defintion
+        Create a transform and its runtime based on the definition
         :param definition: transform definition
         :return: transform and its runtime
         """
