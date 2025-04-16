@@ -206,31 +206,17 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
             if isinstance(transform, tuple):
                 # single transform
                 out_files, st = transform[0].flush_binary()
-<<<<<<< HEAD
-                # accumulate statistics
-                stats |= st
             else:
                 # it's a list
                 partial = []
                 for t in transform:
                     dt, st = t[0].flush_binary()
                     # Accumulate stats
-                    stats |= st
+                    st |= st
                     partial.append(dt)
                 out_files = self.merge_fork_results(data=partial)
-=======
-            else:
-                # it's a list
-                res = []
-                for t in transform:
-                    dt, st = t[0].flush_binary()
-                    # Accumulate stats
-                    st |= st
-                    res.append(dt)
-                out_files = self.merge_fork_results(data=res)
             # accumulate statistics
             stats |= st
->>>>>>> 2891b32 (fork-join implementation)
             if len(out_files) > 0 and i < len(self.participants) - 1:
                 # flush produced output - run it through the rest of the chain
                 data = []
