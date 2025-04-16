@@ -40,7 +40,7 @@ class NOOPTransform(AbstractTableTransform):
         # Make sure that the param name corresponds to the name used in apply_input_params method
         # of NOOPTransformConfiguration class
         super().__init__(config)
-        self.sleep = config.get("sleep_sec", 1)
+        self.sleep = config.get(sleep_key, 1)
 
     def transform(
         self, table: pa.Table, file_name: str = None
