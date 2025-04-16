@@ -70,7 +70,7 @@ class NOOP1TransformConfiguration(TransformConfiguration):
             return False
 
         self.params = self.params | captured
-        logger.info(f"noop parameters are : {self.params}")
+        logger.info(f"noop1 parameters are : {self.params}")
         return True
 
 

@@ -27,7 +27,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         config = {
             "resize_max_rows_per_table": 125,
             "noop_sleep_sec": 1,
-            "noop1_sleep_sec": 1,
+            "noop1_sleep_sec": 0,
         }
         fixtures.append(
             (launcher, config, basedir + "/input", basedir + "/expected-rows-125")
@@ -37,7 +37,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         config = {
             "resize_max_rows_per_table": 125,
             "noop_sleep_sec": 1,
-            "noop1_sleep_sec": 1,
+            "noop1_sleep_sec": 0,
         }
         fixtures.append(
             (launcher, config, basedir + "/input", basedir + "/expected-rows-300")
@@ -47,7 +47,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         config = {
             "resize_max_rows_per_table": 125,
             "noop_sleep_sec": 1,
-            "noop1_sleep_sec": 1,
+            "noop1_sleep_sec": 0,
         }
         fixtures.append(
             (launcher, config, basedir + "/input", basedir + "/expected-mbytes-1")
@@ -57,7 +57,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         config = {
             "resize_max_rows_per_table": 125,
             "noop_sleep_sec": 1,
-            "noop1_sleep_sec": 1,
+            "noop1_sleep_sec": 0,
         }
         fixtures.append(
             (launcher, config, basedir + "/input", basedir + "/expected-mbytes-0.05")
@@ -67,7 +67,7 @@ class TestPythonResizeNOOPTransform(AbstractTransformLauncherTest):
         config = {
             "resize_max_rows_per_table": 125,
             "noop_sleep_sec": 1,
-            "noop1_sleep_sec": 1,
+            "noop1_sleep_sec": 0,
         }
         fixtures.append(
             (launcher, config, basedir + "/input", basedir + "/expected-mbytes-0.02")
