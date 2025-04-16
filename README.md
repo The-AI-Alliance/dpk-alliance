@@ -14,10 +14,11 @@ variety of use cases grow, so does the need to support:
 
 To get more information about implementation architecture, please read this 
 [blog post](https://thealliance.ai/blog/architecture-of-data-prep-kit-framework).
-Additional details can be found here:
-* [transforms](data-processing-lib/src/data_processing/transform/transform.md)
-* [runtime](data-processing-lib/src/data_processing/runtime/runtime.md)
-* [data access](data-processing-lib/src/data_processing/data_access/data-access.md)
+
+The main components of the framework are:
+* [transforms](data-processing-lib/src/data_processing/transform/transform.md) - base classes for transforms creation
+* [runtime](data-processing-lib/src/data_processing/runtime/runtime.md) - implementation of the runtime responsible for starting and executing transforms
+* [data access](data-processing-lib/src/data_processing/data_access/data-access.md) - extendable implementation of configurable data access, including local files, S3 and Hugging Face data sets 
 
 We also provide several examples of the framework usage:
 * [NOOP](data-processing-lib/src/data_processing/examples/noop/README.md)

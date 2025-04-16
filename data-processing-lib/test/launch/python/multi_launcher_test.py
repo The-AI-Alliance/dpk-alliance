@@ -22,8 +22,6 @@ local_conf = {
     "output_folder": os.path.join(os.sep, "tmp", "output"),
 }
 
-code_location = {"github": "github", "commit_hash": "12345", "path": "path"}
-
 
 class TestLauncherPython(PythonTransformLauncher):
     """
