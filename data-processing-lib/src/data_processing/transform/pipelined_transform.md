@@ -25,11 +25,28 @@ Because pipeline transform is a special type of transform, it is using a special
 for a pipelined transforms is a list of transform configurations (specific for transform runtime).
 Here list can have both individual transform configuration or arrays of transform configurations. 
 In the latter case transforms in sublist are considered to be a fork and are executed on the same data.
+The diagram below shows the execution:
+
+```text
+The configuration [a, b, c] is converted to
+
+a -> b -> c
+
+The configuration [a, [b, c]] is converted to
+
+a -> b -> d
+     c ->
+```
+
 After the fork completion, data produced by fork participants is merged, for example fork of two
 transforms each producing a single file will return 2 files.
 Configurations of the participating transforms are defined by the configurations of the transforms 
 themselves.
 
+This implementation might seem limited - it only supports forks with a single transform. In reality this is
+not the case as you can create a pipeline transform using another pipeline transforms as participants, which
+allows you to implement any acyclic graph (no direct support for conditional execution, even this can be implemented 
+by using special transform, with conditional return) of any complexity
+
 > ***Note:*** As per DPK convention, parameters for every transform are prefixed by a transform name, which means 
-that a given transform will always get an appropriate parameter. Also, if you want a given transform to participate
-in several pipelines, but with different configurations, it has to have different prefixes.
+that a given transform will always get an appropriate parameter.
