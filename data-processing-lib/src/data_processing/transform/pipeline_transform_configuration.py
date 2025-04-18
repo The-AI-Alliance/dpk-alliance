@@ -37,7 +37,17 @@ class PipelineTransformConfiguration(TransformConfiguration):
             name=name,
             transform_class=transform_class,
         )
-        self.pipeline = pipeline
+        # convert definition to array of arrays
+        p_arrays = []
+        for p in pipeline:
+            if isinstance(p, TransformRuntimeConfiguration):
+                # single transform
+                p_arrays.append([p])
+            else:
+                # its a list.
+                p_arrays.append(p)
+        # save array of arrays
+        self.pipeline = p_arrays
 
     def add_input_params(self, parser: ArgumentParser) -> None:
         """
@@ -47,13 +57,8 @@ class PipelineTransformConfiguration(TransformConfiguration):
         (e.g, noop_, pii_, etc.)
         """
         for t in self.pipeline:
-            if isinstance(t, TransformRuntimeConfiguration):
-                # single transform
-                t.transform_config.add_input_params(parser=parser)
-            else:
-                # its a list. Note we do not support nested lists here
-                for tt in t:
-                    tt.transform_config.add_input_params(parser=parser)
+            for tt in t:
+                tt.transform_config.add_input_params(parser=parser)
 
     def apply_input_params(self, args: Namespace) -> bool:
         """
@@ -63,13 +68,8 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         res = True
         for t in self.pipeline:
-            if isinstance(t, TransformRuntimeConfiguration):
-                # single transform
-                res = res and t.transform_config.apply_input_params(args=args)
-            else:
-                # its a list.
-                for tt in t:
-                    res = res and tt.transform_config.apply_input_params(args=args)
+            for tt in t:
+                res = res and tt.transform_config.apply_input_params(args=args)
         return res
 
     def get_input_params(self) -> dict[str, Any]:
@@ -80,13 +80,8 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         params = {}
         for t in self.pipeline:
-            if isinstance(t, TransformRuntimeConfiguration):
-                # single transform
-                params |= t.transform_config.get_input_params()
-            else:
-                # its a list.
-                for tt in t:
-                    params |= tt.transform_config.get_input_params()
+            for tt in t:
+                params |= tt.transform_config.get_input_params()
         return params
 
     def get_transform_params(self) -> dict[str, Any]:
@@ -106,11 +101,6 @@ class PipelineTransformConfiguration(TransformConfiguration):
         """
         params = {}
         for t in self.pipeline:
-            if isinstance(t, TransformRuntimeConfiguration):
-                # single transform
-                params |= t.transform_config.get_transform_metadata()
-            else:
-                # its a list.
-                for tt in t:
-                    params |= tt.transform_config.get_transform_metadata()
+            for tt in t:
+                params |= tt.transform_config.get_transform_metadata()
         return params

@@ -43,17 +43,11 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         participants = []
         # for every transform in the pipeline
         for transform in transforms:
-            if isinstance(transform, TransformRuntimeConfiguration):
-                # single transform
-                tr, runtime = self._create_transform(definition=transform)
-                participants.append((tr, runtime))
-            else:
-                # it's a list
-                f_join = []
-                for t in transform:
-                    tr, runtime = self._create_transform(definition=t)
-                    f_join.append((tr, runtime))
-                participants.append(f_join)
+            f_join = []
+            for t in transform:
+                tr, runtime = self._create_transform(definition=t)
+                f_join.append((tr, runtime))
+            participants.append(f_join)
         # save participating transforms
         self.participants = participants
         self.file_name = ""
@@ -124,20 +118,13 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         :param stats: source stats
         :return: resulting data and statistics
         """
-        if isinstance(transform, tuple):
-            # single transform
-            data, st = self._process_transform(transform=transform[0], data=data)
+        res = []
+        for t in transform:
+            dt, st = self._process_transform(transform=t[0], data=data)
             # Accumulate stats
             stats |= st
-        else:
-            # it's a fork. Run all the transforms with the same data
-            res = []
-            for t in transform:
-                dt, st = self._process_transform(transform=t[0], data=data)
-                # Accumulate stats
-                stats |= st
-                res.append(dt)
-            data = self.merge_fork_results(data=res)
+            res.append(dt)
+        data = self.merge_fork_results(data=res)
         return data, stats
 
     @staticmethod
@@ -151,7 +138,10 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         :param data: list of data returned by fork execution
         :return: merged data
         """
-        return [item for array in data for item in array]
+        res_data = []
+        for dt in data:
+            res_data += dt
+        return res_data
 
     @staticmethod
     def _convert_output(data: list[tuple[bytes, str]]) -> list[tuple[bytes, str]]:
@@ -203,20 +193,13 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         res = []
         i = 0
         for transform in self.participants:
-            if isinstance(transform, tuple):
-                # single transform
-                out_files, st = transform[0].flush_binary()
-            else:
-                # it's a list
-                partial = []
-                for t in transform:
-                    dt, st = t[0].flush_binary()
-                    # Accumulate stats
-                    st |= st
-                    partial.append(dt)
-                out_files = self.merge_fork_results(data=partial)
-            # accumulate statistics
-            stats |= st
+            partial = []
+            for t in transform:
+                dt, st = t[0].flush_binary()
+                # Accumulate stats
+                stats |= st
+                partial.append(dt)
+            out_files = self.merge_fork_results(data=partial)
             if len(out_files) > 0 and i < len(self.participants) - 1:
                 # flush produced output - run it through the rest of the chain
                 data = []
