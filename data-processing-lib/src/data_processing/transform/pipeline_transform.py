@@ -1,6 +1,10 @@
-from typing import Any
+from typing import Any, Union
 
-from data_processing.transform import AbstractBinaryTransform, TransformRuntime
+from data_processing.transform import (
+    AbstractBinaryTransform,
+    TransformRuntime,
+    TransformRuntimeConfiguration,
+)
 from data_processing.utils import TransformUtils, UnrecoverableException, get_logger
 
 
@@ -39,16 +43,30 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         participants = []
         # for every transform in the pipeline
         for transform in transforms:
-            # create runtime
-            runtime = transform.create_transform_runtime()
-            # get parameters
-            transform_params = self._get_transform_params(runtime)
-            # Create transform
-            tr = transform.get_transform_class()(transform_params)
-            participants.append((tr, runtime))
+            f_join = []
+            for t in transform:
+                tr, runtime = self._create_transform(definition=t)
+                f_join.append((tr, runtime))
+            participants.append(f_join)
         # save participating transforms
         self.participants = participants
         self.file_name = ""
+
+    def _create_transform(
+        self, definition: TransformRuntimeConfiguration
+    ) -> tuple[AbstractBinaryTransform, TransformRuntime]:
+        """
+        Create a transform and its runtime based on the definition
+        :param definition: transform definition
+        :return: transform and its runtime
+        """
+        # create runtime
+        runtime = definition.create_transform_runtime()
+        # get parameters
+        transform_params = self._get_transform_params(runtime)
+        # Create transform
+        tr = definition.get_transform_class()(transform_params)
+        return tr, runtime
 
     def _get_transform_params(self, runtime: TransformRuntime) -> dict[str, Any]:
         """
@@ -74,15 +92,56 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         self.file_name = file_name
         data = [(byte_array, file_name)]
         stats = {}
-        for transform, _ in self.participants:
-            data, st = self._process_transform(transform=transform, data=data)
-            # Accumulate stats
-            stats |= st
+        for transform in self.participants:
+            data, stats = self._execute_transform(
+                transform=transform, data=data, stats=stats
+            )
             if len(data) == 0:
                 # no data returned by this transform
                 return [], stats
         # all done
         return self._convert_output(data), stats
+
+    def _execute_transform(
+        self,
+        transform: Union[
+            tuple[AbstractBinaryTransform, TransformRuntime],
+            list[tuple[AbstractBinaryTransform, TransformRuntime]],
+        ],
+        data: list[tuple[bytes, str]],
+        stats: dict[str, Any],
+    ) -> tuple[list[tuple[bytes, str]], dict[str, Any]]:
+        """
+        Execute a single or fork/join of transforms
+        :param transform: single or list of transform for forking
+        :param data: source data
+        :param stats: source stats
+        :return: resulting data and statistics
+        """
+        res = []
+        for t in transform:
+            dt, st = self._process_transform(transform=t[0], data=data)
+            # Accumulate stats
+            stats |= st
+            res.append(dt)
+        data = self.merge_fork_results(data=res)
+        return data, stats
+
+    @staticmethod
+    def merge_fork_results(
+        data: list[list[tuple[bytes, str]]],
+    ) -> list[tuple[bytes, str]]:
+        """
+        Merging fork results. We assume only a single fork in the overall pipeline.
+        This is a very simple implementation that just flattens array of arrays. For
+        all other use cases this method has to be overwritten
+        :param data: list of data returned by fork execution
+        :return: merged data
+        """
+        res_data = []
+        for dt in data:
+            res_data += dt
+        return res_data
 
     @staticmethod
     def _convert_output(data: list[tuple[bytes, str]]) -> list[tuple[bytes, str]]:
@@ -102,7 +161,7 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         Process individual transform. Note here that the predecessor could create multiple data objects
         :param transform - transform
         :param data - data to process
-        :return:
+        :return: resulting data and statistics
         """
         stats = {}
         res = []
@@ -133,21 +192,23 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         stats = {}
         res = []
         i = 0
-        for transform, _ in self.participants:
-            out_files, st = transform.flush_binary()
-            # accumulate statistics
-            stats |= st
+        for transform in self.participants:
+            partial = []
+            for t in transform:
+                dt, st = t[0].flush_binary()
+                # Accumulate stats
+                stats |= st
+                partial.append(dt)
+            out_files = self.merge_fork_results(data=partial)
             if len(out_files) > 0 and i < len(self.participants) - 1:
                 # flush produced output - run it through the rest of the chain
                 data = []
                 for ouf in out_files:
                     data.append((ouf[0], self.file_name))
                 for n in range(i + 1, len(self.participants)):
-                    data, st = self._process_transform(
-                        transform=self.participants[n][0], data=data
+                    data, stats = self._execute_transform(
+                        transform=self.participants[n], data=data, stats=stats
                     )
-                    # Accumulate stats
-                    stats |= st
                     if len(data) == 0:
                         # no data returned by this transform
                         break
