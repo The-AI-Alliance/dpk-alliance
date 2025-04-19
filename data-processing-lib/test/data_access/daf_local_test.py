@@ -2,6 +2,7 @@ import os
 
 from data_processing.test_support.data_access import AbstractDataAccessFactoryTests
 from data_processing.utils import ParamsUtils
+from data_processing.data_access import compute_data_location
 
 
 class TestDataAccessFactory(AbstractDataAccessFactoryTests):
@@ -15,12 +16,8 @@ class TestDataAccessFactory(AbstractDataAccessFactoryTests):
             dict: cli parameters to configure the DataAccessFactory with
         """
         params = {}
-        input_folder = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../test-data", "daf", "input")
-        )
-        output_folder = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../test-data", "daf", "output")
-        )
+        input_folder = compute_data_location("test-data/daf/input")
+        output_folder = compute_data_location("test-data/daf/output")
         local_conf = {
             "input_folder": input_folder,
             "output_folder": output_folder,

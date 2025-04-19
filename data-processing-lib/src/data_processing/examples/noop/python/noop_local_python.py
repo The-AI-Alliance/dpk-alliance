@@ -4,12 +4,11 @@ import sys
 from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.utils import ParamsUtils
 from noop_transform import NOOPPythonTransformConfiguration
+from data_processing.data_access import compute_data_location
 
 
 # create parameters
-input_folder = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../../../../test-data/noop/input")
-)
+input_folder = compute_data_location("test-data/noop/input")
 output_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "output"))
 local_conf = {
     "input_folder": input_folder,

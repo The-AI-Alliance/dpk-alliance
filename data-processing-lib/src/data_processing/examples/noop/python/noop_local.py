@@ -3,12 +3,11 @@ import os
 from data_processing.data_access import DataAccessLocal
 from data_processing.utils import TransformUtils
 from noop_transform import NOOPTransform
+from data_processing.data_access import compute_data_location
 
 
 # create parameters
-input_folder = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../../../../test-data/noop/input")
-)
+input_folder = compute_data_location("test-data/noop/input")
 
 noop_params = {"sleep_sec": 1}
 if __name__ == "__main__":

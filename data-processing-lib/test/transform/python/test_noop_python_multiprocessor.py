@@ -1,5 +1,3 @@
-import os
-
 from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.test_support.launch.transform_test import (
     AbstractTransformLauncherTest,
@@ -7,6 +5,7 @@ from data_processing.test_support.launch.transform_test import (
 from data_processing.examples.noop.python import (
     NOOPPythonTransformConfiguration,
 )
+from data_processing.data_access import compute_data_location
 
 
 class TestPythonNOOPTransform(AbstractTransformLauncherTest):
@@ -16,8 +15,7 @@ class TestPythonNOOPTransform(AbstractTransformLauncherTest):
     """
 
     def get_test_transform_fixtures(self) -> list[tuple]:
-        basedir = "../../../test-data/noop"
-        basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), basedir))
+        basedir = compute_data_location("test-data/noop")
         fixtures = []
         launcher = PythonTransformLauncher(NOOPPythonTransformConfiguration())
         fixtures.append(

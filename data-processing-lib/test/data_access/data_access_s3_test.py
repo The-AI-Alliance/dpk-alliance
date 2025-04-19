@@ -1,7 +1,6 @@
-import os
-
 from data_processing.data_access import DataAccessS3
 from moto import mock_aws
+from data_processing.data_access import compute_data_location
 
 
 s3_cred = {
@@ -22,9 +21,7 @@ def _create_and_populate_files(
     # create bucket
     d_a.arrS3.s3_client.create_bucket(Bucket="test")
     # upload file
-    loc = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "../../test-data/input/sample1.parquet")
-    )
+    loc = compute_data_location("test-data/input/sample1.parquet")
     with open(loc, "rb") as file:
         bdata = file.read()
     for i in range(n_files):

@@ -3,11 +3,10 @@ import os
 from data_processing.data_access import DataAccessLocal
 from data_processing.utils import TransformUtils
 from resize_transform import ResizeTransform
+from data_processing.data_access import compute_data_location
 
 
-input_folder = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../../../../test-data/resize/input")
-)
+input_folder = compute_data_location("test-data/resize/input")
 resize_params = {"max_rows_per_table": 75}
 if __name__ == "__main__":
     # Here we show how to run outside of ray

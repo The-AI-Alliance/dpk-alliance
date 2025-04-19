@@ -4,14 +4,13 @@ import sys
 from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.utils import ParamsUtils
 from resize_transform import ResizePythonTransformConfiguration
+from data_processing.data_access import compute_data_location
 
 
 # create launcher
 launcher = PythonTransformLauncher(runtime_config=ResizePythonTransformConfiguration())
 # create parameters
-input_folder = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../../../../test-data/resize/input")
-)
+input_folder = compute_data_location("test-data/resize/input")
 output_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "output"))
 local_conf = {
     "input_folder": input_folder,

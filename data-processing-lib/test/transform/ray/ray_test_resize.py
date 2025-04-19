@@ -1,10 +1,9 @@
-import os
-
 from data_processing.test_support.launch.transform_test import (
     AbstractTransformLauncherTest,
 )
 from data_processing.runtime.ray import RayTransformLauncher
 from data_processing.examples.resize.ray import ResizeRayTransformConfiguration
+from data_processing.data_access import compute_data_location
 
 
 class TestRayResizeTransform(AbstractTransformLauncherTest):
@@ -17,9 +16,7 @@ class TestRayResizeTransform(AbstractTransformLauncherTest):
         # The following based on 3 identical input files of about 39kbytes, and 200 rows
         fixtures = []
         common_config = {"runtime_num_workers": 1, "run_locally": True}
-        basedir = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../../test-data/resize")
-        )
+        basedir = compute_data_location("test-data/resize")
         launcher = RayTransformLauncher(ResizeRayTransformConfiguration())
 
         # Split into 4 or so files

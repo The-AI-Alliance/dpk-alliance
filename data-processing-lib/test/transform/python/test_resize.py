@@ -1,5 +1,3 @@
-import os
-
 from data_processing.runtime.python import PythonTransformLauncher
 from data_processing.test_support.launch.transform_test import (
     AbstractTransformLauncherTest,
@@ -7,6 +5,7 @@ from data_processing.test_support.launch.transform_test import (
 from data_processing.examples.resize.python import (
     ResizePythonTransformConfiguration,
 )
+from data_processing.data_access import compute_data_location
 
 
 class TestPythonResizeTransform(AbstractTransformLauncherTest):
@@ -18,9 +17,7 @@ class TestPythonResizeTransform(AbstractTransformLauncherTest):
     def get_test_transform_fixtures(self) -> list[tuple]:
         # The following based on 3 identical input files of about 39kbytes, and 200 rows
         fixtures = []
-        basedir = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../../test-data/resize")
-        )
+        basedir = compute_data_location("test-data/resize")
         launcher = PythonTransformLauncher(ResizePythonTransformConfiguration())
 
         # Split into 4 or so files

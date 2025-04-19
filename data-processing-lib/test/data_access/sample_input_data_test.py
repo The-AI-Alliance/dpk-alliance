@@ -1,6 +1,5 @@
-import os
-
 from data_processing.data_access import DataAccessLocal
+from data_processing.data_access import compute_data_location
 
 
 def test_table_sampling_data():
@@ -9,9 +8,7 @@ def test_table_sampling_data():
     :return: None
     """
 
-    input_folder = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "../../test-data/input_multiple")
-    )
+    input_folder = compute_data_location("test-data/input_multiple")
     output_folder = "/tmp"
     print(input_folder)
     data_access = DataAccessLocal(
