@@ -32,7 +32,7 @@ The configuration [a, b, c] is converted to
 
 a -> b -> c
 
-The configuration [a, [b, c]] is converted to
+The configuration [a, [b, c], d] is converted to
 
 a -> b -> d
      c ->
