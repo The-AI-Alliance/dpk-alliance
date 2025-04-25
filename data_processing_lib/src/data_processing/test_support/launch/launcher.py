@@ -38,6 +38,3 @@ class NOOPTestLauncherRay(RayTransformLauncher):
         print("\n\nPrinting preprocessing parameters")
         print(f"Run locally {self.run_locally}")
         return 0
-
-
-
