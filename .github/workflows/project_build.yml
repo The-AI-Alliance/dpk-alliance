@@ -1,4 +1,4 @@
-name: Python lint
+name: Project build
 
 on:
   push:
@@ -26,5 +26,6 @@ jobs:
           pip install -r data_processing_lib/requirements.txt
           pip install -r data_processing_lib/requirements-dev.txt
       - name: Lint with ruff
+        working-directory: ./data_processing_lib
         run:
-          make lint
+          make build

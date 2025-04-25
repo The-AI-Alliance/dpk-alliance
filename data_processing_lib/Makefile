@@ -11,7 +11,7 @@ test_data_access::
 	export PYTHONPATH=src ;  \
 	pytest test/data_access
 
-test_invoker::
+test_invoke::
 	export PYTHONPATH=src ;  \
 	pytest test/invoker
 
