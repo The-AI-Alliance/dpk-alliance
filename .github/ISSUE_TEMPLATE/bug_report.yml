@@ -30,20 +30,7 @@ body:
           options:
               - CI/CD
               - Documentation
-              - KFP workflows
               - Library/core
-              - Library/kfp
-              - Makefiles
-              - Tools/ingest2parquet
-              - Transforms/code/code_quality
-              - Transforms/code/proglang_select
-              - Transforms/code/malware
-              - Transforms/universal/doc_id
-              - Transforms/universal/ededup
-              - Transforms/universal/fdedup
-              - Transforms/universal/noop
-              - Transforms/universal/tokenization
-              - Transforms/Other
               - Other
       validations:
           required: true
@@ -95,7 +82,7 @@ body:
               - "Red Hat Enterprise Linux (RHEL)"
               - "Fedora"
               - "Windows WSL"
-              - "MacOS (limited support)"
+              - "MacOS"
               - "Other"
       validations:
           required: true

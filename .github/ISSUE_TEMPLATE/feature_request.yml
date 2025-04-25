@@ -26,19 +26,7 @@ body:
               What component would implement this new feature.
           multiple: true
           options:
-              - KFP workflows
               - Library/core
-              - Library/kfp
-              - Tools/ingest2parquet
-              - Transforms/code/code_quality
-              - Transforms/code/proglang_select
-              - Transforms/code/malware
-              - Transforms/universal/doc_id
-              - Transforms/universal/ededup
-              - Transforms/universal/fdedup
-              - Transforms/universal/noop
-              - Transforms/universal/tokenization
-              - Transforms/Other
               - Other
       validations:
           required: true
