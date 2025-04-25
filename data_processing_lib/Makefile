@@ -2,6 +2,9 @@ clean::
 	@# Help: Clean up the distribution build and the venv
 	rm -rf dist test/output
 
+lint::
+	ruff format
+
 test_data_access::
 	export PYTHONPATH=src ;  \
 	pytest test/data_access
