@@ -25,7 +25,7 @@ jobs:
         run: |
           pip install -r data_processing_lib/requirements.txt
           pip install -r data_processing_lib/requirements-dev.txt
-      - name: Lint with ruff
+      - name: Test launcher
         working-directory: ./data_processing_lib
         run:
           make test_launch
