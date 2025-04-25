@@ -29,7 +29,7 @@ class AbstractBinaryTransform(AbstractTransform):
                 to metadata.  Each element of the return list, is a tuple of the transformed bytes and a string
                 holding the extension to be used when writing out the new bytes.
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def flush_binary(self) -> tuple[list[tuple[bytes, str]], dict[str, Any]]:
         """

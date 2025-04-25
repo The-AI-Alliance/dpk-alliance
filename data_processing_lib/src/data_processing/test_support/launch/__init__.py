@@ -1,7 +1,7 @@
 from data_processing.test_support.launch.transform_test import (
-    AbstractTransformLauncherTest,
+    AbstractTransformLauncherTest as AbstractTransformLauncherTest,
 )
 from data_processing.test_support.launch.launcher import (
-    NOOPTestLauncherPython,
-    NOOPTestLauncherRay,
+    NOOPTestLauncherPython as NOOPTestLauncherPython,
+    NOOPTestLauncherRay as NOOPTestLauncherRay,
 )

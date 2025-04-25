@@ -1,5 +1,3 @@
-import os
-
 from data_processing.test_support.data_access import AbstractDataAccessFactoryTests
 from data_processing.utils import ParamsUtils
 from data_processing.data_access import compute_data_location

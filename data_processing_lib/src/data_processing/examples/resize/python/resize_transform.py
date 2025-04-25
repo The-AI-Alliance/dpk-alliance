@@ -139,7 +139,7 @@ class ResizeTransform(AbstractTableTransform):
             result.append(self.buffer)
             self.buffer = None
         else:
-            self.logger.debug(f"Empty buffer. nothing to flush.")
+            self.logger.debug("Empty buffer. nothing to flush.")
         return result, {}
 
 

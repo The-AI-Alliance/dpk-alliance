@@ -21,7 +21,7 @@ class TransformRuntime:
         :param data_access: data access
         :return: list of folders to process
         """
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def get_transform_config(
         self, statistics, data_access_factory: list[DataAccessFactory], files: list[str]

@@ -93,4 +93,4 @@ class AbstractTransformLauncherTest(AbstractTest):
             |  Item 4: columns to drop for table comparison (optional), if omitted an empty array is used
         :return:  a list of Tuples, to test. Each tuple contains the test inputs for test_transform() method.
         """
-        raise NotImplemented()
+        raise NotImplementedError()

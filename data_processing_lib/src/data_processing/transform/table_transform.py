@@ -43,7 +43,7 @@ class AbstractTableTransform(AbstractBinaryTransform):
             return [], {"failed_reads": 1}
         # Ensure that table is not empty
         if table.num_rows == 0:
-            self.logger.warning(f"table is empty, skipping processing")
+            self.logger.warning("table is empty, skipping processing")
             return [], {"skipped empty tables": 1}
         # transform table
         out_tables, stats = self.transform(table=table, file_name=file_name)
@@ -65,7 +65,7 @@ class AbstractTableTransform(AbstractBinaryTransform):
         :return: a tuple of a list of 0 or more converted tables and a dictionary of statistics that will be
         propagated to metadata
         """
-        raise NotImplemented("This method must be implemented by the subclass")
+        raise NotImplementedError("This method must be implemented by the subclass")
 
     def flush_binary(self) -> tuple[list[tuple[bytes, str]], dict[str, Any]]:
         """

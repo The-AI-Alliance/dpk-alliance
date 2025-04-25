@@ -74,7 +74,7 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         :param runtime - runtime
         :return: transform params
         """
-        raise NotImplemented("must be implemented by subclass")
+        raise NotImplementedError("must be implemented by subclass")
 
     def transform_binary(
         self, file_name: str, byte_array: bytes
@@ -226,4 +226,4 @@ class AbstractPipelineTransform(AbstractBinaryTransform):
         :param stats: current statistics from flush
         :return: None
         """
-        raise NotImplemented("must be implemented by subclass")
+        raise NotImplementedError("must be implemented by subclass")

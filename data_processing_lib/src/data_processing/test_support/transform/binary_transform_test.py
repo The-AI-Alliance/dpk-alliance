@@ -79,4 +79,4 @@ class AbstractBinaryTransformTest(AbstractTest):
             Item 2: The expected list of output file(s) for transformation of the input.
             Item 3: the expected metadata for transformation of the input.
         """
-        raise NotImplemented()
+        raise NotImplementedError()

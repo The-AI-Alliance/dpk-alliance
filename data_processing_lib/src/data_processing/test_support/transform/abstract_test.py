@@ -67,7 +67,7 @@ class AbstractTest:
 
     @abstractmethod
     def _install_test_fixtures(self, metafunc):
-        raise NotImplemented(
+        raise NotImplementedError(
             "Sub-class must implemented this to install the fixtures for its tests."
         )
 
@@ -94,7 +94,7 @@ class AbstractTest:
         for i in range(l1):
             t1 = table_list[i]
             t2 = expected_table_list[i]
-            assert t1.schema == t2.schema, f"Schema of the two tables is not the same"
+            assert t1.schema == t2.schema, "Schema of the two tables is not the same"
             rows1 = t1.num_rows
             rows2 = t2.num_rows
             assert rows1 == rows2, (
@@ -218,12 +218,12 @@ class AbstractTest:
         assert expected_metadata is not None, (
             "Test misconfigured: expected metadata is None"
         )
-        assert isinstance(metadata, dict), f"Did not generate metadata of type dict"
+        assert isinstance(metadata, dict), "Did not generate metadata of type dict"
         assert isinstance(expected_metadata, dict), (
-            f"Test misconfigured, expected metadata is not a dictionary"
+            "Test misconfigured, expected metadata is not a dictionary"
         )
         assert metadata == expected_metadata, (
-            f"Metadata not equal\n"
+            "Metadata not equal\n"
             "\tTransformed: {metadata}  Expected   : {expected_metadata}"
         )
 

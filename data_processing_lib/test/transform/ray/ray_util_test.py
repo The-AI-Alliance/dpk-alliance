@@ -43,10 +43,10 @@ def test_column_validation():
 def test_duplicates():
     table = _create_table()
     res = TransformUtils.verify_no_duplicate_columns(table=table, file="foo")
-    assert res == True
+    assert res
     table = create_duplicate_column()
     res = TransformUtils.verify_no_duplicate_columns(table=table, file="foo")
-    assert res == False
+    assert not res
 
 
 def test_add_column():

@@ -28,4 +28,4 @@ class AbstractFolderTransform(AbstractTransform):
                 to metadata.  Each element of the return list, is a tuple of the transformed bytes and a string
                 holding the file name to use.
         """
-        raise NotImplemented()
+        raise NotImplementedError()

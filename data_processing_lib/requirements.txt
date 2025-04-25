@@ -4,6 +4,7 @@
   argparse
   mmh3
   psutil
+  polars
   huggingface-hub>=0.25.2
   ray[default]>=2.36.1
   fastapi>=0.110.2
