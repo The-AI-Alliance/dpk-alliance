@@ -7,7 +7,7 @@ from data_processing.runtime import TransformOrchestrator
 from data_processing.utils import GB, UnrecoverableException, get_logger
 from ray.actor import ActorHandle
 from ray.exceptions import RayError
-from ray.experimental.state.api import list_actors
+from ray.util.state.api import list_actors
 from ray.util.actor_pool import ActorPool
 
 
