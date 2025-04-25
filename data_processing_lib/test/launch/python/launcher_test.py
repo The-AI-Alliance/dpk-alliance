@@ -1,11 +1,8 @@
 import os
 import sys
 
-from data_processing.runtime.python import PythonTransformLauncher
-from data_processing.examples.noop.python import (
-    NOOPPythonTransformConfiguration,
-)
 from data_processing.utils import ParamsUtils
+from data_processing.test_support.launch import NOOPTestLauncherPython
 
 
 """
@@ -27,22 +24,6 @@ local_conf = {
 }
 
 
-class TestLauncherPython(PythonTransformLauncher):
-    """
-    Test driver for validation of the functionality
-    """
-
-    def __init__(self):
-        super().__init__(NOOPPythonTransformConfiguration())
-
-    def _submit_for_execution(self) -> int:
-        """
-        Overwrite this method to just print all parameters to make sure that everything works
-        :return:
-        """
-        return 0
-
-
 def test_launcher():
     params = {
         "data_max_files": -1,
@@ -50,27 +31,27 @@ def test_launcher():
     }
     # s3 not defined
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     # Add S3 configuration
     params["data_s3_config"] = ParamsUtils.convert_to_ast(s3_conf)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 1 == res
     # Add S3 credentials
     params["data_s3_cred"] = ParamsUtils.convert_to_ast(s3_cred)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     # Add local config, should fail because now three different configs exist
     params["data_local_config"] = ParamsUtils.convert_to_ast(local_conf)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 1 == res
     # remove local config, should still fail, because two configs left
     del params["data_local_config"]
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
 
 
@@ -82,7 +63,7 @@ def test_local_config():
         "data_checkpointing": False,
     }
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
 
 
@@ -99,19 +80,19 @@ def test_local_config_validate():
     params["data_local_config"] = ParamsUtils.convert_to_ast(local_conf_empty)
     sys.argv = ParamsUtils.dict_to_req(d=params)
     print(f"parameters {sys.argv}")
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 1 == res
     params["data_local_config"] = ParamsUtils.convert_to_ast(local_conf_no_input)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     params["data_local_config"] = ParamsUtils.convert_to_ast(local_conf_no_output)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     params["data_local_config"] = ParamsUtils.convert_to_ast(local_conf)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
 
 
@@ -129,17 +110,17 @@ def test_s3_config_validate():
     params["data_s3_config"] = ParamsUtils.convert_to_ast(s3_conf_empty)
     sys.argv = ParamsUtils.dict_to_req(d=params)
     print(f"parameters {sys.argv}")
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 1 == res
     params["data_s3_config"] = ParamsUtils.convert_to_ast(s3_conf_no_input)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     params["data_s3_config"] = ParamsUtils.convert_to_ast(s3_conf_no_output)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
     params["data_s3_config"] = ParamsUtils.convert_to_ast(s3_conf)
     sys.argv = ParamsUtils.dict_to_req(d=params)
-    res = TestLauncherPython().launch()
+    res = NOOPTestLauncherPython().launch()
     assert 0 == res
