@@ -23,8 +23,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install -f data_processing_lib/requirements.txt
-          pip install -f data_processing_lib/requirements-dev.txt
+          pip install -r data_processing_lib/requirements.txt
+          pip install -r data_processing_lib/requirements-dev.txt
       - name: Lint with ruff
         working-directory: ./data_processing_lib
         run:
