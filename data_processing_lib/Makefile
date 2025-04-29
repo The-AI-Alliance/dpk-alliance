@@ -8,6 +8,9 @@ clean::
 lint::
 	ruff check
 
+format::
+	ruff format
+
 test_data_access::
 	export PYTHONPATH=src ;  \
 	pytest test/data_access --cov
@@ -28,5 +31,15 @@ test_transform_ray::
 	export PYTHONPATH=src ;  \
 	pytest test/transform/ray --cov
 
-build:
+build::
 	pip install .
+
+build_dist::
+	rm -rf dist || true
+	rm -rf src/*egg-info || true
+	pip install --upgrade build
+	python3.10 -m build
+
+publish::
+	python3.10 -m twine check dist/*
+	python3.10 -m twine upload --verbose --non-interactive dist/*

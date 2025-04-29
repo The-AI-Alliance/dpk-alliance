@@ -1,9 +1,9 @@
 [project]
-name = "dpk_prep_alliance"
+name = "sdpk"
 version = "0.0.1"
 keywords = ["data", "data preprocessing", "data preparation", "llm", "generative", "ai"]
 requires-python = ">=3.10,<3.13"
-description = "Data Preparation Toolkit Library for Ray and Python"
+description = "Small DPK - an extended fork of Data Preparation Toolkit Library for Ray and Python"
 license = {text = "Apache-2.0"}
 readme = {file = "README.md", content-type = "text/markdown"}
 authors = [
@@ -13,7 +13,7 @@ authors = [
 dynamic = ["dependencies", "optional-dependencies"]
 
 [build-system]
-requires = ["setuptools>=68.0.0", "wheel", "setuptools_scm[toml]>=7.1.0"]
+requires = ["setuptools>=68.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
