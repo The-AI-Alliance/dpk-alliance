@@ -1,6 +1,6 @@
 [project]
 name = "sdpk"
-version = "0.0.1"
+version = "0.0.2"
 keywords = ["data", "data preprocessing", "data preparation", "llm", "generative", "ai"]
 requires-python = ">=3.10,<3.13"
 description = "Small DPK - an extended fork of Data Preparation Toolkit Library for Ray and Python"

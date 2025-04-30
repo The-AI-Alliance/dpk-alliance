@@ -1,9 +1,9 @@
 import json
-from typing import Any
+from typing import Any, Union, Iterable
 
 from data_processing.data_access import DataAccess
 from data_processing.utils import get_logger
-from huggingface_hub import HfApi, HfFileSystem, RepoCard
+from huggingface_hub import HfApi, HfFileSystem, RepoCard, DatasetInfo
 from huggingface_hub.errors import EntryNotFoundError
 
 
@@ -216,3 +216,21 @@ class DataAccessHF(DataAccess):
         # write new Readme file
         with self.fs.open(path=path, mode="w", newline="", encoding="utf-8") as f:
             f.write(content)
+
+    def get_datasets_list(
+        self, filter: Union[str, Iterable[str], None] = None
+    ) -> Iterable[DatasetInfo]:
+        """
+        List datasets hosted on the Huggingface Hub, given some filters.
+        :param filter: a string or list of string to filter datasets on the hub.
+        :return: Iterator of data set info
+        """
+        return self.apis.list_datasets(filter=filter)
+
+    def readme_to_repocard(self, content: str) -> RepoCard:
+        """
+        Convert readme file to data card
+        :param content: readme content
+        :return: data card
+        """
+        return RepoCard(content=content)
